@@ -3,7 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.34916.146
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAppLibros", "WebAppLibros\WebAppLibros.csproj", "{6E8EE3ED-60A8-4A04-AA28-DB73E33C4A77}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAppLibros", "WebAppLibros\WebAppLibros.csproj", "{6E8EE3ED-60A8-4A04-AA28-DB73E33C4A77}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTesting", "UnitTesting", "{A218462D-FC45-4EF8-804F-727CF9823BA1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAppLibros.Core", "WebAppLibros.Core\WebAppLibros.Core.csproj", "{637183C4-D3B2-4362-AFA4-712606D59FB0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAppLibros.Infrastructure", "WebAppLibros.Infrastructure\WebAppLibros.Infrastructure.csproj", "{CB26D27B-FCAC-4867-8E9F-92F95D319AE6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAppLibros.Services", "WebAppLibros.Services\WebAppLibros.Services.csproj", "{A90DDD00-8F43-4693-BD9D-8A3F7B539340}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +23,18 @@ Global
 		{6E8EE3ED-60A8-4A04-AA28-DB73E33C4A77}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6E8EE3ED-60A8-4A04-AA28-DB73E33C4A77}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6E8EE3ED-60A8-4A04-AA28-DB73E33C4A77}.Release|Any CPU.Build.0 = Release|Any CPU
+		{637183C4-D3B2-4362-AFA4-712606D59FB0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{637183C4-D3B2-4362-AFA4-712606D59FB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{637183C4-D3B2-4362-AFA4-712606D59FB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{637183C4-D3B2-4362-AFA4-712606D59FB0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CB26D27B-FCAC-4867-8E9F-92F95D319AE6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CB26D27B-FCAC-4867-8E9F-92F95D319AE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CB26D27B-FCAC-4867-8E9F-92F95D319AE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CB26D27B-FCAC-4867-8E9F-92F95D319AE6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A90DDD00-8F43-4693-BD9D-8A3F7B539340}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A90DDD00-8F43-4693-BD9D-8A3F7B539340}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A90DDD00-8F43-4693-BD9D-8A3F7B539340}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A90DDD00-8F43-4693-BD9D-8A3F7B539340}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

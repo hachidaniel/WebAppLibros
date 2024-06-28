@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Cors;
-using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using WebAppLibros.Context;
-using WebAppLibros.Models;
+using WebAppLibros.Core.Entities;
+using WebAppLibros.Core.Interfaces.Services;
 
 namespace WebAppLibros.Controllers
 {
@@ -15,95 +9,89 @@ namespace WebAppLibros.Controllers
     [ApiController]
     public class LibrosController : ControllerBase
     {
-        private readonly AppDbContext _context;
-
-        public LibrosController(AppDbContext context)
+        //private readonly AppDbContext _context;
+        private readonly ILibrosService _librosService;
+        private readonly ILogger _logger;
+        private readonly IMapper _mapper;
+        public LibrosController(ILibrosService librosService, IMapper mapper )
         {
-            _context = context;
+            _librosService = librosService;
+            _mapper = mapper;
         }
 
         // GET: api/Libros
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Libros>>> GetLibros()
         {
-            return await _context.Libros.ToListAsync();
+            var classrooms =
+                        await _librosService.GetAll();
+
+            var mappedClassrooms =
+                        _mapper.Map<IEnumerable<Core.Entities.Libros>, IEnumerable<Core.Entities.Libros>>(classrooms);
+
+            return Ok(mappedClassrooms);
         }
 
-        // GET: api/Libros/5
+       // GET: api/Libros/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Libros>> GetLibros(int id)
         {
-            var libros = await _context.Libros.FindAsync(id);
-
-            if (libros == null)
-            {
-                return NotFound();
-            }
-
-            return libros;
-        }
-
-        // PUT: api/Libros/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutLibros(int id, Libros libros)
-        {
-            if (id != libros.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(libros).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!LibrosExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            var classroom = await _librosService.GetClassroomById(id);
+            var mappedClassroom =
+                _mapper.Map<Core.Entities.Libros, Core.Entities.Libros>(classroom);
+            return Ok(mappedClassroom);
         }
 
         // POST: api/Libros
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Libros>> PostLibros(Libros libros)
+        public async Task<ActionResult<Core.Entities.Libros>> PostLibros([FromBody]  Core.Entities.Libros libros)
         {
-            _context.Libros.Add(libros);
-            await _context.SaveChangesAsync();
+            try
+            {
+                var createdClassroom =
+                    await _librosService.CreateClassroom(_mapper.Map<Core.Entities.Libros, Core.Entities.Libros>(libros));
 
-            return CreatedAtAction("GetLibros", new { id = libros.Id }, libros);
+                return Ok(_mapper.Map<Core.Entities.Libros, Core.Entities.Libros>(createdClassroom));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
+
+        // PUT: api/Libros/5
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutLibros(int id, [FromBody] Core.Entities.Libros libros)
+        {
+            try
+            {
+                var updatedClassroom =
+                    await _librosService.UpdateClassroom(id, _mapper.Map<Core.Entities.Libros, Core.Entities.Libros>(libros));
+
+                return Ok(_mapper.Map<Core.Entities.Libros, Core.Entities.Libros>(updatedClassroom));
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+
 
         // DELETE: api/Libros/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteLibros(int id)
         {
-            var libros = await _context.Libros.FindAsync(id);
+            var libros = _librosService.DeleteClassroom(id);
             if (libros == null)
             {
                 return NotFound();
             }
 
-            _context.Libros.Remove(libros);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool LibrosExists(int id)
-        {
-            return _context.Libros.Any(e => e.Id == id);
+            return Ok(libros);
         }
     }
 }
