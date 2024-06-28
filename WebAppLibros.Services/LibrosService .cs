@@ -63,7 +63,10 @@ namespace WebAppLibros.Services
 
             classroomToBeUpdated.Name = newClassroomValues.Name;
             classroomToBeUpdated.Description = newClassroomValues.Description;
-            classroomToBeUpdated.Id = newClassroomValues.Id;
+            classroomToBeUpdated.Title = newClassroomValues.Title;
+            classroomToBeUpdated.Count = newClassroomValues.Count;
+            classroomToBeUpdated.Url = newClassroomValues.Url;
+            classroomToBeUpdated.IsDeleted = newClassroomValues.IsDeleted;
 
             await _unitOfWork.CommitAsync();
 
